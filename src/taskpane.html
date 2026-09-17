@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Word Document Inspector</title>
+    <!-- Office.js -->
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/taskpane.css" />
+</head>
+<body>
+    <header class="app-header">
+        <h1>Word Document Inspector</h1>
+        <div class="status-bar">
+            <span id="status-indicator" class="status-dot"></span>
+            <span id="status-text" style="max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Initializing...</span>
+            <button id="btn-refresh" class="icon-btn" title="Force Refresh">↻</button>
+        </div>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-target="tab-live">LIVE</button>
+        <button class="tab-btn" data-target="tab-selection">SELECTION</button>
+        <button class="tab-btn" data-target="tab-audit">AUDIT</button>
+    </div>
+
+    <main class="content-area">
+        <!-- LIVE TAB (Cursor Mode) -->
+        <section id="tab-live" class="tab-pane active">
+            <div class="card">
+                <h2>Font Properties</h2>
+                <div class="prop-grid" id="live-font-grid">
+                    <span class="label">Name:</span> <span class="val" id="live-font-name">-</span>
+                    <span class="label">Size:</span> <span class="val" id="live-font-size">-</span>
+                    <span class="label">Style:</span> <span class="val" id="live-font-style">-</span>
+                    <span class="label">Color:</span> <span class="val" id="live-font-color">-</span>
+                    <span class="label">Scale (%):</span> <span class="val" id="live-font-scale">-</span>
+                    <span class="label">Spacing:</span> <span class="val" id="live-font-spacing">-</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Paragraph Formatting</h2>
+                <div class="prop-grid" id="live-para-grid">
+                    <span class="label">Alignment:</span> <span class="val" id="live-para-align">-</span>
+                    <span class="label">Line Spacing:</span> <span class="val" id="live-para-linespace">-</span>
+                    <span class="label">Space Before:</span> <span class="val" id="live-para-before">-</span>
+                    <span class="label">Space After:</span> <span class="val" id="live-para-after">-</span>
+                    <span class="label">Style:</span> <span class="val" id="live-para-style">-</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Indentation</h2>
+                <div class="prop-grid" id="live-indent-grid">
+                    <span class="label">Left:</span> <span class="val" id="live-indent-left">-</span>
+                    <span class="label">Right:</span> <span class="val" id="live-indent-right">-</span>
+                    <span class="label">Special:</span> <span class="val" id="live-indent-first">-</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SELECTION TAB -->
+        <section id="tab-selection" class="tab-pane">
+            <div class="card">
+                <h2>Selection Summary</h2>
+                <div class="prop-grid">
+                    <span class="label">Words:</span> <span class="val" id="sel-words">0</span>
+                    <span class="label">Characters:</span> <span class="val" id="sel-chars">0</span>
+                    <span class="label">Paragraphs:</span> <span class="val" id="sel-paras">0</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Font Distribution (Words)</h2>
+                <div id="sel-font-dist" class="dist-list">
+                    <em>Select text to analyze.</em>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Font + Size Distribution</h2>
+                <div id="sel-font-size-dist" class="dist-list scroll-list">
+                    <em>Select text to analyze.</em>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Paragraph Alignments</h2>
+                <div id="sel-align-dist" class="dist-list"></div>
+            </div>
+        </section>
+
+        <!-- AUDIT TAB -->
+        <section id="tab-audit" class="tab-pane">
+            <div class="card">
+                <h2>Formatting Consistency Audit</h2>
+                <p class="desc">Analyzes current selection to find exceptions against the dominant format.</p>
+                <div id="audit-results">
+                    <em>Run analysis in the Selection tab first.</em>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JS Modules -->
+    <script src="js/utils.js"></script>
+    <script src="js/ooxmlParser.js"></script>
+    <script src="js/wordApiHelper.js"></script>
+    <script src="js/selectionAnalyzer.js"></script>
+    <script src="js/auditEngine.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/taskpane.js"></script>
+</body>
+</html>
